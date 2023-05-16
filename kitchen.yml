@@ -1,0 +1,43 @@
+---
+driver:
+  name: docker
+  hostname: lorem.test-infra.opensuse.org
+  is_file_root: true
+  use_sudo: false
+
+provisioner:
+  name: salt_solo
+  salt_install: false
+  require_chef: false
+  log_level: info
+  state_top:
+    base:
+      '*':
+        - grains
+  pillars:
+    top.sls:
+      base:
+        '*':
+          - grains_pillar
+  grains:
+    integration_test: true
+
+platforms:
+  - name: openSUSE-Tumbleweed
+    driver_config:
+      image: registry.opensuse.org/home/crameleon/containers/containers/crameleon/salt:latest
+      platform: opensuse
+
+verifier:
+  name: inspec
+
+suites:
+  - name: grains-default
+    provisioner:
+      pillars-from-files:
+        grains_pillar.sls: grains-formula/test/pillar/default.sls
+      collection_name: grains
+      state_collection: grains-formula/grains
+    verifier:
+      inspec_tests:
+        - grains-formula/test/integration/default
