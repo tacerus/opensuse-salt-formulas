@@ -60,4 +60,4 @@ suites:
       state_collection: grains-formula/grains
     verifier:
       name: shell
-      command: pytest --color=yes --hosts="paramiko://${KITCHEN_USERNAME}@${KITCHEN_HOSTNAME}:${KITCHEN_PORT}?ssh_identity_file=${KITCHEN_SSH_KEY}" grains-formula/test/integration-py/default.py
+      command: pytest --verbose --color=yes --hosts="paramiko://${KITCHEN_USERNAME}@${KITCHEN_HOSTNAME}:${KITCHEN_PORT}?ssh_identity_file=${KITCHEN_SSH_KEY}" grains-formula/test/integration-py/default.py
