@@ -28,16 +28,23 @@ platforms:
       image: registry.opensuse.org/home/crameleon/containers/containers/crameleon/salt:latest
       platform: opensuse
 
-verifier:
-  name: inspec
-
 suites:
-  - name: grains-default
+  - name: grains-default-inspec
     provisioner:
       pillars-from-files:
         grains_pillar.sls: grains-formula/test/pillar/default.sls
       collection_name: grains
       state_collection: grains-formula/grains
     verifier:
+      name: inspec
       inspec_tests:
         - grains-formula/test/integration/default
+  - name: grains-default-testinfra
+    provisioner:
+      pillars-from-files:
+        grains_pillar.sls: grains-formula/test/pillar/default.sls
+      collection_name: grains
+      state_collection: grains-formula/grains
+    verifier:
+      name: shell
+      command: pytest --color=yes --hosts="paramiko://${KITCHEN_USERNAME}@${KITCHEN_HOSTNAME}:${KITCHEN_PORT}?ssh_identity_file=${KITCHEN_SSH_KEY}" grains-formula/test/integration-py/default.py
