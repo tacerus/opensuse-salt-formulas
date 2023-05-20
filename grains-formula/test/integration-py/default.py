@@ -4,9 +4,9 @@ import pytest
 import testinfra
 import yaml
 
-@pytest.fixture
-def host():
-    return testinfra.get_host('docker://{KITCHEN_USERNAME}@{KITCHEN_CONTAINER_ID}'.format(**os.environ))
+#@pytest.fixture
+#def host():
+#    return testinfra.get_host('docker://{KITCHEN_USERNAME}@{KITCHEN_CONTAINER_ID}'.format(**os.environ))
 
 @pytest.fixture
 def file():
