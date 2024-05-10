@@ -62,6 +62,15 @@
       {%- elif low_value is string %}
     {{ option }} {{ low_option }} {{ low_value }}
 
+      {%- elif low_value is iterable %}
+        {%- if option in repetitive_options %}
+          {%- for entry in value %}
+    {{ ( option ~ ' ' ~ low_option ~ ' ' ~ entry ) | indent(i, True) }}
+          {%- endfor %}
+        {%- else %}
+    {{ ( option ~ ' ' ~ low_option ~ ' ' ~ ' '.join(value) ) | indent(i, True) }}
+        {%- endif %}
+
       {%- endif %} {#- close low_value type check #}
 
     {%- endfor %} {#- close value iteration #}

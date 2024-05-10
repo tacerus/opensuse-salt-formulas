@@ -76,6 +76,11 @@ apache_httpd:
         /mypath: /usr/share/mypath
         /myotherpath: /usr/share/myotherpath
 
+      SetEnvIf:
+        Request_URI:
+          - /foo dofoo
+          - /bar dobar
+
       # mappings such as Directory, Location or LocationMatch are all feature identical
       Directory:
         /srv/www/example:
